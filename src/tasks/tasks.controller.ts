@@ -1,13 +1,4 @@
-import {
-	Controller,
-	Get,
-	Param,
-	Query,
-	Delete,
-	Body,
-	Post,
-	Put
-} from '@nestjs/common';
+import { Controller, Get, Param, Query, Delete, Body, Post, Put, ParseIntPipe } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create.task.dto';
 import { UpdateTaskDto } from './dto/update.task.dto';
@@ -18,32 +9,31 @@ export class TasksController {
 
 	@Get()
 	getTasks() {
-		return this.taskService.listAllTasks()
+		return this.taskService.listAllTasks();
 	}
 
 	@Get("/busca")
 	findManyTasks(@Query() queryParam: any) {
-		return this.taskService.listAllTasks()
+		return this.taskService.listAllTasks();
 	}
 
 	@Get(":id")
-	findSingleTask(@Param('id') id: string) {
-		return this.taskService.findOneTask(id)
+	findSingleTask(@Param('id', ParseIntPipe) id: number) {
+		return this.taskService.findOneTask(id);
 	}
 
 	@Post()
-	createTask (@Body() createTaskDto: CreateTaskDto){
-		return this.taskService.create(createTaskDto)
+	createTask(@Body() createTaskDto: CreateTaskDto) {
+		return this.taskService.create(createTaskDto);
 	}
 
-	@Put (":id") //Patch
-	updateTasks(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-		return this.taskService.update(id, updateTaskDto)
+	@Put(":id")
+	updateTasks(@Param('id', ParseIntPipe) id: number, @Body() updateTaskDto: UpdateTaskDto) {
+		return this.taskService.update(id, updateTaskDto);
 	}
 
 	@Delete(":id")
-	deleteTasks(@Param('id') id: string) {
-		return this.taskService.delete(id)
+	deleteTasks(@Param('id', ParseIntPipe) id: number) {
+		return this.taskService.delete(id);
 	}
-
 }
