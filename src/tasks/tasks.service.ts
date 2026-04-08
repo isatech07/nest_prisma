@@ -16,7 +16,6 @@ export class TasksService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async listAllTasks(paginationDto: PaginationDto) {
-    // ✅ paginação corrigida (sem função inexistente)
     const limit = paginationDto?.limit ?? 4;
     const offset = paginationDto?.offset ?? 0;
 
@@ -58,6 +57,8 @@ export class TasksService {
         data: {
           name: createTaskDto.title,
           description: createTaskDto.description,
+          userId: createTaskDto.userId,
+          completed: false,
         },
       });
 
